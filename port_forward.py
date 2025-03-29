@@ -38,6 +38,28 @@ import threading
 import argparse
 import json
 import os
+import time
+
+# 添加以下代码确保在Windows环境下显示控制台窗口
+def ensure_console_window():
+    """确保在Windows环境下显示控制台窗口"""
+    if sys.platform.startswith('win'):
+        try:
+            import ctypes
+            # 获取控制台窗口句柄
+            kernel32 = ctypes.WinDLL('kernel32')
+            hwnd = kernel32.GetConsoleWindow()
+            
+            if hwnd == 0:  # 如果没有控制台窗口
+                # 分配新的控制台
+                kernel32.AllocConsole()
+                
+                # 重定向标准输入输出流
+                sys.stdout = open('CONOUT$', 'w')
+                sys.stderr = open('CONOUT$', 'w')
+                sys.stdin = open('CONIN$', 'r')
+        except Exception as e:
+            print(f"无法创建控制台窗口: {e}")
 
 def load_config(config_file='config.json'):
     """从配置文件加载参数
@@ -73,6 +95,9 @@ def main():
         解析命令行参数并启动端口转发服务
         处理键盘中断信号，实现优雅退出
     """
+    # 确保控制台窗口可见
+    ensure_console_window()
+    
     # 加载配置文件
     config = load_config()
     

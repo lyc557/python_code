@@ -121,6 +121,13 @@ python3 port_forward.py
 - 配置文件读取错误
 - 网络传输错误
 
+
+# 打包
+```bash
+pip install pyinstaller
+pyinstaller --onefile --name port_forward port_forward.py
+```
+
 ## 许可证
 
 本项目采用MIT许可证。欢迎使用和改进。
