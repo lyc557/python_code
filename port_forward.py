@@ -21,7 +21,7 @@ TCP端口转发工具
        python3 port_forward.py -l 8080 -r example.com -p 80
 
     2. 转发到本地其他端口：
-       python3 port_forward.py -l 8080 -r localhost -p 3000
+       python3 port_forward.py -l 9666 -r localhost -p 10088
 
     3. 转发到内网服务器：
        python3 port_forward.py -l 8080 -r 192.168.1.100 -p 8080
