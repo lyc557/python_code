@@ -12,12 +12,14 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, macos-latest]
+      # 添加 fail-fast: false 防止一个平台失败导致整个工作流取消
+      fail-fast: false
         
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: '3.x'
         
@@ -32,7 +34,8 @@ jobs:
       run: pyinstaller --onefile port_forward.py
         
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2
+      # 更新到 v3 版本
+      uses: actions/upload-artifact@v3
       with:
         name: ${{ matrix.os }}-build
         path: dist/
