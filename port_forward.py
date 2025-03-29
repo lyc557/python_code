@@ -49,9 +49,9 @@ def load_config(config_file='config.json'):
         包含配置参数的字典，如果配置文件不存在则返回默认值
     """
     default_config = {
-        'local_port': 8080,
+        'local_port': 9666,
         'remote_host': 'localhost',
-        'remote_port': 80
+        'remote_port': 10088
     }
     
     try:
