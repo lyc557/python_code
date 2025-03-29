@@ -21,7 +21,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.x'
+        python-version: '3.10'  # 使用特定版本以确保一致性
         
     - name: Install dependencies
       run: |
@@ -30,12 +30,16 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       shell: bash
         
-    - name: Build with PyInstaller
-      run: pyinstaller --onefile port_forward.py
+    - name: Build with PyInstaller (Windows)
+      if: matrix.os == 'windows-latest'
+      run: pyinstaller --onefile --name port_forward port_forward.py
+        
+    - name: Build with PyInstaller (macOS)
+      if: matrix.os == 'macos-latest'
+      run: pyinstaller --onefile --name port_forward port_forward.py
         
     - name: Upload artifacts
-      # 更新到 v3 版本
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ matrix.os }}-build
+        name: port_forward-${{ matrix.os }}
         path: dist/
